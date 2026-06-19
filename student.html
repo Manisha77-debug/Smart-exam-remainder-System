@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Smart Exam Reminder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Notification Bell at Top-left -->
+        <div class="notification-container">
+            <div class="notification-trigger" onclick="toggleNotificationPanel()" title="Alerts">
+                🔔 <span id="notification-badge" class="nav-badge hidden">0</span>
+            </div>
+            <div id="notification-panel" class="notification-panel" style="left: 0; right: auto;">
+                <div class="panel-header">
+                    <h4>Alerts</h4>
+                    <span style="font-size:0.8rem; cursor:pointer; color:var(--primary); font-weight: 600;" onclick="clearAllNotifications()">Clear All</span>
+                </div>
+                <div id="notification-list" class="panel-list">
+                    <p style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.9rem;">No new alerts</p>
+                </div>
+                <div class="settings-item">
+                    <span>Sound Alerts</span>
+                    <div id="sound-toggle" class="toggle-switch on" onclick="toggleSound()"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="nav-title">Student Dashboard</h2>
+
+        <!-- Profile Icon at Top-right -->
+        <div class="profile-container">
+            <div class="profile-icon" onclick="toggleProfile()" title="Profile">👤</div>
+            <div id="profile-box" class="profile-box hidden">
+                <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>Email:</strong> <br><span id="profile-email" style="color:var(--text-muted); font-size:0.85rem; word-break: break-all;">--</span></p>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>Branch:</strong> <span id="profile-branch" style="color:var(--text-muted);">--</span></p>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>Section:</strong> <span id="profile-section" style="color:var(--text-muted);">--</span></p>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>Roll No:</strong> <span id="profile-roll" style="color:var(--text-muted);">--</span></p>
+                </div>
+                <button id="logout-btn" class="btn secondary-btn" style="width: 100%; border: 1px solid var(--danger-light); color: var(--danger); background: #fff;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container dashboard-layout" style="display: flex; gap: 2rem;">
+        
+        <!-- Left Side: Next Exam Countdown (Compact) -->
+        <aside class="sidebar" style="flex: 0 0 300px; position: sticky; top: 100px;">
+            <div id="next-exam-banner" class="countdown-banner hidden">
+                <div class="banner-content">
+                    <h4>Next Exam</h4>
+                    <h2 id="banner-subject">Loading...</h2>
+                </div>
+                <div class="banner-timer">
+                    <span id="banner-time-left">--:--:--</span>
+                    <p id="banner-date-time">-- | --</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Side: Exams Main Area -->
+        <main style="flex: 1; min-width: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0; font-size: 1.5rem; text-align: left;">Upcoming Exams</h3>
+            </div>
+
+            <div class="exams-list" style="margin-top: 0;">
+                <div id="student-exams-container" class="exams-grid">
+                    <p style="text-align:center; width:100%; color:var(--text-muted); font-size: 1rem; grid-column: 1 / -1; margin-top: 2rem;">Loading exams...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+    <script type="module" src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+</html>

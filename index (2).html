@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Exam Reminder - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Login Form -->
+        <div id="login-section" class="card active">
+            <h2>Welcome Back</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" required placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn primary-btn">Login</button>
+            </form>
+            <p class="toggle-text">Don't have an account? <span id="show-register">Register here</span></p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-section" class="card hidden">
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="reg-email" required placeholder="Enter email">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" required placeholder="Create password">
+                </div>
+                <div class="input-group">
+                    <label>Role</label>
+                    <select id="reg-role" required>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="input-group" id="roll-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="reg-roll" placeholder="e.g. CSE045" required>
+                </div>
+                <div class="input-group" id="section-group">
+                    <label>Section</label>
+                    <input type="text" id="reg-section" placeholder="e.g. A, B, C" required>
+                </div>
+                <button type="submit" class="btn primary-btn">Register</button>
+            </form>
+            <p class="toggle-text">Already have an account? <span id="show-login">Login here</span></p>
+        </div>
+    </div>
+    
+    <script type="module" src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+</html>
